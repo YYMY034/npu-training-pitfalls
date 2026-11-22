@@ -7,7 +7,7 @@
  "entries": [
   {
    "id": "INC-0",
-   "sig": "silently",
+   "sig": "EAGLE-3 acceptance rate 1.01 but throughput -36% (silent draft useless)",
    "layer": "other",
    "title": "EAGLE-3 draft accepted at construction, silently useless at inference",
    "symptom": "Engine builds and serves; SpecDecoding metrics report Mean acceptance length 1.01 (5 accepted of 1720 drafted). Throughput 0.64x of baseline at k=3.",
@@ -31,7 +31,7 @@
   },
   {
    "id": "OWN-024",
-   "sig": "hang",
+   "sig": "contents PUT returns 200 but file unchanged",
    "layer": "platform",
    "title": "OpenI Jupyter contents-API PUT returns 200 but silently leaves the file content unchanged",
    "symptom": "PUT /api/contents/<file> responds 200, yet a later GET (with cache-buster) returns the pre-PUT bytes; happened during a phase where the repo git backend was also silently dropping commits",
@@ -55,7 +55,7 @@
   },
   {
    "id": "OWN-026",
-   "sig": "排队",
+   "sig": "WAITING 分中心排队中 >5min (sub-center queue)",
    "layer": "platform",
    "title": "Debug task stuck WAITING '分中心排队中' (sub-center queue) for >5 min despite earlier instant scheduling",
    "symptom": "task created via 再次调试 stays WAITING; detail page hides 开始调试; list page shows a status icon with title 分中心排队中 and disabled 再次调试/删除; zero billing while WAITING",
@@ -67,7 +67,7 @@
   },
   {
    "id": "OWN-009",
-   "sig": "undefined symbol",
+   "sig": "libtorch_npu.so undefined symbol (torch ABI mismatch)",
    "layer": "env-install",
    "title": "PyPI torch 2.10.0 aarch64 wheel is ABI-incompatible with every torch_npu 2.10.0.postX wheel",
    "symptom": "import torch_npu raises RuntimeError 'Failed to load the backend extension: torch_npu' wrapping ImportError: libtorch_npu.so: undefined symbol _ZN5torch8autograd10deleteNodeEPNS0_4NodeE",
@@ -79,7 +79,7 @@
   },
   {
    "id": "OWN-010",
-   "sig": "hang",
+   "sig": "venv clone cp -a: pip shebang points to old venv",
    "layer": "env-install",
    "title": "venv clone via cp -a keeps pip script shebangs pointing at the source venv",
    "symptom": "all pip operations on the cloned venv (bin/pip) silently install into the ORIGINAL venv; the clone's own site-packages never change; the source venv ends up with a foreign torch/vllm combination and stops working",
@@ -91,7 +91,7 @@
   },
   {
    "id": "OWN-011",
-   "sig": "double",
+   "sig": "bash double quotes strip inner quotes (python -c payload)",
    "layer": "other",
    "title": "bash double-quote wrapping strips inner double quotes from python -c payloads",
    "symptom": "python -c 'print(\"X\")' inside a bash double-quoted command executes as print(X) -> NameError that looks like an import failure",
@@ -151,7 +151,7 @@
   },
   {
    "id": "OWN-016",
-   "sig": "undefined symbol",
+   "sig": "vllm-ascend 0.30 kernel library hard-fails on CANN 9.1",
    "layer": "cann-hardware",
    "title": "vllm-ascend 0.30.0 kernel library hard-fails on CANN 9.1.0 hosts",
    "symptom": "engine construction fails: ImportError libvllm_ascend_kernels.so: undefined symbol MsprofUnRegisterCallback; imports succeed, engine never starts",
@@ -163,7 +163,7 @@
   },
   {
    "id": "OWN-017",
-   "sig": "hang",
+   "sig": "modelscope >=1.40 cache dir names break model-path globs",
    "layer": "other",
    "title": "modelscope >= 1.40 cache directory names break naive model-path globs",
    "symptom": "glob patterns like models/**/Qwen2.5-7B-Instruct match nothing because the cache directory is Qwen--Qwen2.5-7B-Instruct; code silently falls back to a HuggingFace model id and hangs or fails on network access",
@@ -235,7 +235,7 @@
   },
   {
    "id": "VA-006",
-   "sig": "silently",
+   "sig": "resolve_block_scales silently miscomputes TP shard dequant",
    "layer": "platform",
    "title": "[Bug]: resolve_block_scales silently miscomputes dequantized weights for a TP shard whose row/column range starts mid-block",
    "symptom": "TP 分片的行/列范围起始于 FP8 block 中部时，反量化 scale 静默算错且形状校验通过：合成样例 66.6% 元素错（max abs diff 1.80），真实 GLM-5.3-Flash q_a_proj TP=8 分片 ~7% 相对 L2 误差、22-24% 元素错",
@@ -259,7 +259,7 @@
   },
   {
    "id": "VA-008",
-   "sig": "checkpoint",
+   "sig": "Qwen3.6 MoE W8A8 garbled output on vllm-ascend 0.30",
    "layer": "framework",
    "title": "[Bug]:Qwen3.6-35B-A3B MoE W8A8（compressed-tensors）在 vllm-ascend v0.30.0rc2 输出乱码，v0.18 正常",
    "symptom": "13 token 纯文本提示即输出乱码（'s 1 s ${ senators,is . S -/ s 曾 to心里…）；同 checkpoint/tokenizer/prompt/脚本在 0.18 正常；日志出现 'Falling back to UnquantizedLinearMethod'",
@@ -283,7 +283,7 @@
   },
   {
    "id": "VA-010",
-   "sig": "ERR00100",
+   "sig": "aclnnIndex vector core exception 50 (w4a8 prefill)",
    "layer": "cann-hardware",
    "title": "[Bug]: DSV4.1-Flash w4a8 prefill crashes in aclnnIndex (compressor.wgate) — vector core exception 507035 on 910B",
    "symptom": "4P4D 部署下 4 个 prefill 节点反复重启：VllmWorker 因向量核异常（507035）死于 aclnnIndex 算子，级联 HCCL ALLGATHER/ALLTOALL 超时 → ERR00100 → HCCL watchdog → worker 死亡 → 健康 probe 503 → pod 重启；decode 节点不受影响，跨设备/跨天稳定复现（排除硬件故障）",
@@ -331,7 +331,7 @@
   },
   {
    "id": "VA-014",
-   "sig": "silently",
+   "sig": "off-stride max_num_seqs silently disables ACL graph (~7.5x slow)",
    "layer": "cann-hardware",
    "title": "[Bug]: off-stride max_num_seqs silently disables ACL graph capture for the largest batches (~7.5x slower decode)",
    "symptom": "cudagraph_mode=FULL_DECODE_ONLY 时，max_num_seqs 不为 1/2/4/8 的倍数 → 最大批次无捕获图、静默 eager 回退慢 ~7.5 倍（69.4 vs 520.0 tok/s，172.79 vs 23.08 ms/step），无任何警告；max_num_seqs=20 时 6.7 倍（117.8 vs 788.7 tok/s）",
@@ -343,7 +343,7 @@
   },
   {
    "id": "VA-015",
-   "sig": "silently",
+   "sig": "decode throughput collapses 3-4x beyond 256 seqs",
    "layer": "platform",
    "title": "[Bug]: Decode throughput collapses 3-4x silently when running sequences exceed 256 per engine (tp=8, DeepSeek-V4-Flash-w8a8-mtp, Ascend 910B2)",
    "symptom": "每 engine 并发序列超过 256 后 decode 吞吐静默崩 3-4 倍（总 3048→1182 tok/s，per-step ~120→~400ms），无错误无警告，AICore 利用率 32%→8%、整卡 172W→131W；N=256 健康，N=258 即崩，悬崖精确落在 2 的幂 256",
@@ -391,7 +391,7 @@
   },
   {
    "id": "OWN-002",
-   "sig": "ERR00100",
+   "sig": "ERR00100 aclnnInplaceCopy (910C needs CANN A3 variant)",
    "layer": "cann-hardware",
    "title": "910C 容器需 CANN A3 专用变体（/usr/local/ascend83a3），标准 8.3.rc1 对 aclnnInplaceCopy 报 ERR00100",
    "symptom": "标准 CANN 8.3.rc1 环境在 910C 上运行时 aclnnInplaceCopy 报 ERR00100；切换到 CANN A3 专用变体（容器内路径 /usr/local/ascend83a3）后正常",
@@ -403,7 +403,7 @@
   },
   {
    "id": "OWN-003",
-   "sig": "ACL 507034",
+   "sig": "ACL 507034 (task scheduled onto Alarmed bad card)",
    "layer": "cann-hardware",
    "title": "调试任务被调度到 Alarm 坏卡 → ACL 507034，重建容器解决",
    "symptom": "调试任务分到集群中带 Alarm 标记的坏卡，运行报 ACL 507034；重建容器（重新调度到健康卡）后问题消失",
